@@ -11,7 +11,8 @@ export default class App extends React.Component {
             repeatPassword: '',
             country: '1',
             gender: '',
-            agreed: false
+            agreed: false,
+            avatar: ""
         }
     }
 
@@ -29,6 +30,17 @@ export default class App extends React.Component {
         this.setState({
             [event.target.name]: event.target.checked
         })
+    };
+
+    onFileInputChange = event => {
+        const fileReader = new FileReader();
+        fileReader.onload = event => {
+            this.setState({
+                "avatar" : event.target.result
+            })
+        };
+
+        fileReader.readAsDataURL(event.target.files[0])
     };
 
     getOptionsItems = (items) => {
@@ -134,14 +146,25 @@ export default class App extends React.Component {
                                name="agreed"
                                value={this.state.agreed}
                                checked={this.state.agreed === true}
-                               onChange={this.onCheckboxChange}
-                        />
+                               onChange={this.onCheckboxChange}/>
                         <label
                             className="form-check-label"
-                            htmlFor="checkbox"
-                        >
+                            htmlFor="checkbox">
                             Agreed
                         </label>
+                    </div>
+                    <div className="form-group">
+                        <label
+                            htmlFor="fileAvatar">
+                            Example file input
+                        </label>
+                        <input
+                            type="file"
+                            className="form-control-file"
+                            id="fileAvatar"
+                            name="avatar"
+                            onChange={this.onFileInputChange}
+                        />
                     </div>
                     <button
                         type="submit"

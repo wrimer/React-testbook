@@ -1,5 +1,6 @@
 import React from "react";
 import countries from '../data/countries'
+import Field from './Field'
 
 export default class App extends React.Component {
     constructor() {
@@ -13,10 +14,12 @@ export default class App extends React.Component {
             gender: '',
             agreed: false,
             avatar: "",
+            age: 0,
             errors: {
                 username: false,
                 password: false,
-                repeatPassword: false
+                repeatPassword: false,
+                age: false
             }
         }
     }
@@ -41,7 +44,7 @@ export default class App extends React.Component {
 
         if (!Object.keys(errors).length) {
             this.setState({errors: {}});
-            console.log('Done')
+            console.log(this.state)
         } else {
             this.setState({
                 errors: errors
@@ -84,64 +87,58 @@ export default class App extends React.Component {
         ))
     };
 
+    decrementAge = () => {
+        this.setState({
+                age: this.state.age - 1
+            }
+        )
+    };
+
+    incrementAge = () => {
+        this.setState({
+                age: this.state.age + 1
+            }
+        )
+    };
+
 
     render() {
         return (
             <div className="form-container card">
                 <form className="form card-body">
-                    <div className="form-group">
-                        <label>Username</label>
-                        <input
-                            name="username"
-                            type="text"
-                            className="form-control"
-                            placeholder="Enter username"
-                            value={this.state.username}
-                            onChange={this.onInputChange}
-                            ref={node => (this.username = node)}
-                        />
-                        {this.state.errors.username ? (
-                            <div className="invalid-feedback">
-                                {this.state.errors.username}
-                            </div>
-                        ) : null}
-                    </div>
 
-                    <div className="form-group">
-                        <label>Password</label>
-                        <input
-                            name="password"
-                            type="text"
-                            className="form-control"
-                            placeholder="Enter password"
-                            value={this.state.password}
-                            onChange={this.onInputChange}
-                            ref={node => (this.password = node)}
-                        />
-                        {this.state.errors.password ? (
-                            <div className="invalid-feedback">
-                                {this.state.errors.password}
-                            </div>
-                        ) : null}
-                    </div>
+                    <Field
+                        id="username"
+                        labelText="username"
+                        name="username"
+                        type="text"
+                        placeholder="username"
+                        value={this.state.username}
+                        onChange={this.onInputChange}
+                        error={this.state.errors.username}
+                    />
 
-                    <div className="form-group">
-                        <label>Repeat password</label>
-                        <input
-                            name="repeatPassword"
-                            type="text"
-                            className="form-control"
-                            placeholder="Enter repeat password"
-                            value={this.state.repeatPassword}
-                            onChange={this.onInputChange}
-                            ref={node => (this.repeatPassword = node)}
-                        />
-                        {this.state.errors.repeatPassword ? (
-                            <div className="invalid-feedback">
-                                {this.state.errors.repeatPassword}
-                            </div>
-                        ) : null}
-                    </div>
+                    <Field
+                        id="password"
+                        labelText="Password"
+                        type="password"
+                        placeholder="Enter password"
+                        name="password"
+                        value={this.state.password}
+                        onChange={this.onInputChange}
+                        error={this.state.errors.password}
+                    />
+
+                    <Field
+                        id="repeatPassword"
+                        labelText="Password"
+                        type="password"
+                        placeholder="Repeat password"
+                        name="repeatPassword"
+                        value={this.state.repeatPassword}
+                        onChange={this.onInputChange}
+                        error={this.state.errors.repeatPassword}
+                    />
 
                     <div className="form-group">
                         <label htmlFor="country">Country</label>
@@ -213,6 +210,30 @@ export default class App extends React.Component {
                             name="avatar"
                             onChange={this.onFileInputChange}
                         />
+                    </div>
+                    <div className="btn-group">
+                        <button
+                            className="btn btn-secondary"
+                            type="button"
+                            onClick={this.decrementAge}
+                        >
+                            -
+                        </button>
+                        <input
+                            type="number"
+                            className="form-control"
+                            placeholder="Enter age"
+                            name="age"
+                            value={this.state.age}
+                            onChange={this.onInputChange}
+                        />
+                        <button
+                            className="btn btn-secondary"
+                            type="button"
+                            onClick={this.incrementAge}
+                        >
+                            +
+                        </button>
                     </div>
                     <button
                         type="submit"

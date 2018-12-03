@@ -12,12 +12,42 @@ export default class App extends React.Component {
             country: '1',
             gender: '',
             agreed: false,
-            avatar: ""
+            avatar: "",
+            errors: {
+                username: false,
+                password: false,
+                repeatPassword: false
+            }
         }
     }
 
     onSubmit = event => {
         event.preventDefault();
+
+        const errors = {};
+
+        if (this.state.username.length <= 5) {
+            errors.username = "Username must be 6 characters or more"
+        }
+
+        if (this.state.password.length <= 5) {
+            errors.password = "password must be 6 characters or more"
+        }
+
+        if (this.state.repeatPassword !== this.state.password) {
+            errors.repeatPassword = "passwords doesnt match"
+        }
+
+
+        if (!Object.keys(errors).length) {
+            this.setState({errors: {}});
+            console.log('Done')
+        } else {
+            this.setState({
+                errors: errors
+            });
+        }
+
     };
 
     onInputChange = event => {
@@ -36,7 +66,7 @@ export default class App extends React.Component {
         const fileReader = new FileReader();
         fileReader.onload = event => {
             this.setState({
-                "avatar" : event.target.result
+                "avatar": event.target.result
             })
         };
 
@@ -70,7 +100,13 @@ export default class App extends React.Component {
                             onChange={this.onInputChange}
                             ref={node => (this.username = node)}
                         />
+                        {this.state.errors.username ? (
+                            <div className="invalid-feedback">
+                                {this.state.errors.username}
+                            </div>
+                        ) : null}
                     </div>
+
                     <div className="form-group">
                         <label>Password</label>
                         <input
@@ -82,7 +118,13 @@ export default class App extends React.Component {
                             onChange={this.onInputChange}
                             ref={node => (this.password = node)}
                         />
+                        {this.state.errors.password ? (
+                            <div className="invalid-feedback">
+                                {this.state.errors.password}
+                            </div>
+                        ) : null}
                     </div>
+
                     <div className="form-group">
                         <label>Repeat password</label>
                         <input
@@ -94,7 +136,13 @@ export default class App extends React.Component {
                             onChange={this.onInputChange}
                             ref={node => (this.repeatPassword = node)}
                         />
+                        {this.state.errors.repeatPassword ? (
+                            <div className="invalid-feedback">
+                                {this.state.errors.repeatPassword}
+                            </div>
+                        ) : null}
                     </div>
+
                     <div className="form-group">
                         <label htmlFor="country">Country</label>
                         <select

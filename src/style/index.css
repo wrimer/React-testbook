@@ -9,3 +9,7 @@ body {
   transform: translate(-50%, -50%);
   width: 460px;
 }
+
+.invalid-feedback {
+  display: block;
+}

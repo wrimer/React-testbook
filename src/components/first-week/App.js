@@ -1,5 +1,5 @@
 import React from "react";
-import countries from '../data/countries'
+import countries from '../../data/countries'
 import Field from './Field'
 
 export default class App extends React.Component {

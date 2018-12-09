@@ -13,3 +13,22 @@ body {
 .invalid-feedback {
   display: block;
 }
+
+.steps__list {
+  display: flex;
+  list-style-type: none;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step_valid {
+  color: green;
+}
+
+.step_active {
+  color: red;
+}
